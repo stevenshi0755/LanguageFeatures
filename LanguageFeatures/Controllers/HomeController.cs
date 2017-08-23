@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LanguageFeatures.Models;
+using LanguageFeatures;
 
 namespace LanguageFeatures.Controllers
 {
@@ -25,6 +26,60 @@ namespace LanguageFeatures.Controllers
             string productName = myProduct.Name;
             //生成视图
             return View("Result", (object)String.Format("Product name:{0}", productName));
+        }
+        public string Action1()
+        {
+            Product myAction = new Product();
+            myAction.Description = "the description";
+            return (myAction.Description);
+        }
+        public ViewResult CreateProduct()
+        {
+            //Product myProduct = new Product();
+            //myProduct.ProductID = 100;
+            //myProduct.Name = "Stevenshi";
+            //myProduct.Description = "A boat for one person";
+            //myProduct.Price = 275M;
+            //myProduct.Category = "Watersports";
+
+            //对象初始化器
+            Product myProduct = new Product
+            {
+                ProductID = 100,
+                Name = "Steven Shi",
+                Description = "A boat for one person",
+                Price = 275m,
+                Category = "Watersports"
+            };
+            //return View( (object)myProduct.Category);
+            return View("Result", (object)String.Format("Category:{0}", myProduct.Category));
+        }
+        public ViewResult CreateCollection()
+        {
+            //string[] stringArray = { "apple", "orange", "plum" };
+            string[] stringArray = new string[] { "apple", "orange", "plum" };
+            List<int> intList = new List<int> { 10, 20, 30, 40 };
+            Dictionary<string, int> myDict = new Dictionary<string, int> { { "apple", 10 }, { "orange", 20 }, { "plum", 30 } };
+            return View("Result", (object)stringArray[1]);
+        }
+        public ViewResult UserExtension()
+        //创建并填充ShoppingCart
+        {
+            ShoppingCart cart = new ShoppingCart
+            {
+                Products = new List<Product>
+                {
+                    new Product{Name="Kayak",Price=275M},
+                    new Product{Name="Lifejacket",Price=48.95M},
+                    new Product{Name="soccer ball",Price=19.50M},
+                    new Product{Name="Corner flag",Price=34.95M}
+                }
+            };
+            //求购物车中产品总价
+            decimal cartTotal = cart.TotalPrices();
+            return View("Result",(object)string.Format("Total price is:{0:c}",cartTotal));
+            
+       
         }
     }
 }
