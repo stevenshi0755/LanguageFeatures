@@ -62,10 +62,28 @@ namespace LanguageFeatures.Controllers
             Dictionary<string, int> myDict = new Dictionary<string, int> { { "apple", 10 }, { "orange", 20 }, { "plum", 30 } };
             return View("Result", (object)stringArray[1]);
         }
-        public ViewResult UserExtension()
+        //public ViewResult UserExtension()
+        ////创建并填充ShoppingCart
+        //{
+        //    ShoppingCart cart = new ShoppingCart
+        //    {
+        //        Products = new List<Product>
+        //        {
+        //            new Product{Name="Kayak",Price=275M},
+        //            new Product{Name="Lifejacket",Price=48.95M},
+        //            new Product{Name="soccer ball",Price=19.50M},
+        //            new Product{Name="Corner flag",Price=34.95M}
+        //        }
+        //    };
+        //    //求购物车中产品总价
+        //    decimal cartTotal = cart.TotalPrices();
+        //    return View("Result",(object)string.Format("Total price is:{0:c}",cartTotal));
+        //}
+
+        public ViewResult UseExtensionEnumerable()
         //创建并填充ShoppingCart
         {
-            ShoppingCart cart = new ShoppingCart
+            IEnumerable<Product> Products = new ShoppingCart
             {
                 Products = new List<Product>
                 {
@@ -75,9 +93,22 @@ namespace LanguageFeatures.Controllers
                     new Product{Name="Corner flag",Price=34.95M}
                 }
             };
+            //创建并填充一个Product对象的数组
+            Product[] productArray =
+            {
+                new Product {Name="Kayak",Price=275M},
+                new Product {Name="Lifejacket",Price=48.95M},
+                new Product {Name="Soccer ball",Price=19.50M},
+                new Product {Name="Corner flag",Price=34.95M}
+            };
+            //获取购物车中产品的总价
+            decimal cartTotal = Products.TotalPrices();
+            decimal arrayTotal = Products.TotalPrices();
+            return View("Result", (object)String.Format("Cart Total:{0},Array Total:{1}", cartTotal, arrayTotal));
+
             //求购物车中产品总价
-            decimal cartTotal = cart.TotalPrices();
-            return View("Result",(object)string.Format("Total price is:{0:c}",cartTotal));
+            //decimal cartTotal = cart.TotalPrices();
+            //return View("Result", (object)string.Format("Total price is:{0:c}", cartTotal));
 
         }
     }
