@@ -12,7 +12,8 @@ namespace LanguageFeatures.Models
         //此处为ShoppingCart类，可以通过cartParam参数来引用ShoppingCart类的实例
         {
             decimal total = 0;
-            foreach (Product prod in cartParam.Products)
+            foreach (Product prod in cartParam.Products)  
+            //该扩展方法枚举了ShoppingCart中的所有Product，并返回Product.Price属性之和
             {
                 total += prod.Price;
             }

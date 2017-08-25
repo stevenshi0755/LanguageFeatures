@@ -78,8 +78,7 @@ namespace LanguageFeatures.Controllers
             //求购物车中产品总价
             decimal cartTotal = cart.TotalPrices();
             return View("Result",(object)string.Format("Total price is:{0:c}",cartTotal));
-            
-       
+
         }
     }
 }
